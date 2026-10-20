@@ -5,32 +5,37 @@ Repository for uploaded code
 ## 目录结构
 
 ```
-Helloworld/Helloworld/src/   # 「美食之旅」静态网站（HTML + CSS + 原生 JS）
-  index.html                 # 首页（横幅 + 本周热门推荐）
-  categories.html            # 美食分类
-  featured.html              # 本周推荐（按评分排序）
-  about.html                 # 关于我们
-  detail-1.html ~ detail-4.html  # 美食详情页（食材、步骤、评分表单）
-  styles.css                 # 全站样式
-  script.js                  # 数据 + 路由 + 页面渲染
-  images/                    # 菜品图片占位（SVG）
+Helloworld/Helloworld/
+  package.json               # Vite 脚手架（dev / build / preview 脚本）
+  vite.config.js             # root=src、多页面入口、端口 5173 / 5174
+  src/                       # 站点源码根目录
+    index.html               # 首页（横幅 + 本周热门推荐）
+    categories.html          # 美食分类
+    featured.html            # 本周推荐（按评分排序）
+    about.html               # 关于我们
+    detail-1.html ~ detail-4.html  # 美食详情页（食材、步骤、评分表单）
+    styles.css               # 全站样式
+    script.js                # 数据 + 路由 + 页面渲染（以 ES module 方式加载）
+    public/images/           # 菜品图片（Vite publicDir，原样拷贝到产物根目录）
+  dist/                      # vite build 产物（已 gitignore）
 ```
 
-## 如何运行
-
-这是一个纯静态站点，不需要构建，任选一种方式启动：
+## 如何运行（Vite）
 
 ```bash
-# 方式 1：Python 内置服务器（推荐）
-cd Helloworld/Helloworld/src
-python3 -m http.server 8000
-# 浏览器打开 http://127.0.0.1:8000/index.html
+cd Helloworld/Helloworld
+npm install        # 首次运行安装 vite
 
-# 方式 2：Node
-npx serve Helloworld/Helloworld/src
+npm run dev        # 开发服务器，带 HMR，默认 http://localhost:5173/
+npm run serve      # 同上，但监听 0.0.0.0（容器 / 端口转发场景）
+npm run build      # 生产构建，输出到 Helloworld/Helloworld/dist
+npm run preview    # 预览构建产物，默认 http://localhost:5174/
 ```
 
-> 直接双击 `index.html`（`file://` 协议）也能打开，但推荐用本地服务器，行为与线上一致。
+启动后直接用浏览器访问 `http://localhost:5173/index.html` 即可（访问 `/` 也会打开首页）。
+
+> 说明：站点是纯静态多页面，所有页面都在 `vite.config.js` 的 `rollupOptions.input` 中登记，`npm run build` 才会把 8 个 HTML 全部产出。
+> 页面里的 `<script type="module" src="script.js">` 让 Vite 能打包 / 热更新脚本；样式通过 `styles.css` 直接引用。
 
 ## 运行效果
 
@@ -47,8 +52,8 @@ npx serve Helloworld/Helloworld/src
 
 ## 已修复的问题（相对上传版本）
 
-**HTML (`index.html`)**
-- `<script src="js/main.js">` 指向不存在的文件（实际脚本是 `script.js`）→ 改为 `script.js`。
+**HTML**
+- `<script src="js/main.js">` 指向不存在的文件（实际脚本是 `script.js`）→ 改为 `script.js`，并加上 `type="module"` 以便 Vite 打包与热更新。
 - 补齐导航里引用但缺失的页面：`categories.html`、`featured.html`、`about.html`、`detail-1~4.html`。
 
 **JS (`script.js`)**
@@ -68,9 +73,9 @@ npx serve Helloworld/Helloworld/src
 - 补上 JS 生成的 `banner` / `featured` / `page-title` / `category-section` / `food-category` / `food-rating` 以及详情页表单、页脚的样式。
 
 **资源**
-- 缺失 `images/hotpot.jpg` 等图片（原路径会 404）→ 新增 4 张 SVG 占位图（`images/*.svg`），后续替换成真实照片即可。
+- 缺失 `images/hotpot.jpg` 等图片（原路径会 404）→ 新增 4 张 SVG 占位图，放到 `src/public/images/`（Vite 会原样拷贝到构建产物），后续替换成真实照片即可。
 
 ## 备注
 
-- 详情页通过文件名路由（`detail-<id>.html`），新增菜品时需要同时新增对应的 HTML 文件。
+- 详情页通过文件名路由（`detail-<id>.html`），新增菜品时需要同时新增对应 HTML，并在 `vite.config.js` 的 `rollupOptions.input` 里登记。
 - 评分表单目前只做前端提示（`alert`），未接入后端存储。
