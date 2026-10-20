@@ -8,25 +8,40 @@
 
 ## 快速开始
 
+### macOS / Linux
+
 ```bash
-# 方式一：一键启动（自动选 Node，没有 Node 就用 Python）
-./start.sh              # macOS / Linux，默认 http://localhost:8080
+./start.sh              # 默认 http://localhost:8080
 ./start.sh 3000         # 指定端口
 
-# Windows：双击 start.bat，或在命令行执行
+# 或直接用自带服务器
+node server.js
+PORT=3000 node server.js
+```
+
+### Windows
+
+```bat
+:: CMD（或直接双击 start.bat）
 start.bat
 start.bat 3000
-
-# 方式二：直接用零依赖自带服务器
-node server.js          # http://localhost:8080
-PORT=3000 node server.js
-
-# 方式三：最省事——直接双击 index.html
-# （hash 路由与 localStorage 都能用，无需服务器）
-
-# 方式四：只想要个静态服务器
-python3 -m http.server 8080
 ```
+
+```powershell
+# PowerShell：当前目录的可执行文件必须加 .\ 前缀
+.\start.bat 3000
+.\start.ps1 3000
+```
+
+### 任何系统：零依赖静态服务器
+
+```bash
+python3 -m http.server 8080     # 有 Python 就行
+```
+
+### 最省事：直接双击 index.html
+
+hash 路由与 localStorage 都能用，无需任何服务器。
 
 `server.js` 是一个 100 行的零依赖静态服务器：正确的 MIME 类型、`404` 友好页面、目录穿越防护、端口被占用时自动顺延端口。
 
@@ -65,7 +80,8 @@ python3 -m http.server 8080
 │   └── app.js          # hash 路由、渲染、搜索筛选、收藏评分、主题
 ├── server.js           # 零依赖本地启动服务器
 ├── start.sh            # macOS / Linux 一键启动
-├── start.bat           # Windows 一键启动
+├── start.bat           # Windows 一键启动（CMD / 双击）
+├── start.ps1           # Windows PowerShell 一键启动
 └── README.md
 ```
 
@@ -120,6 +136,38 @@ python3 -m http.server 8080
 | CSS 颜色缺少 `#`（`color: 333`、`background: f9f9f9`）、`padding: 1 rem` 带空格、`@media(...;)` 非法分号 | 全量重写样式表，并通过 `csstree-validator` 校验 |
 | `index.html` 引用了不存在的 `js/main.js`、`categories.html`、`featured.html`、`about.html`、`images/*.jpg` | 改为单页 hash 路由，配图用「渐变 + emoji」生成，彻底消除 404 |
 | 只有 1 条菜品数据，无搜索、无筛选、无收藏 | 扩充到 12 道菜 / 9 个菜系，补齐搜索、排序、收藏、评分、主题等能力 |
+
+---
+
+## 常见问题
+
+**PowerShell 提示「无法将 start.bat 项识别为 cmdlet…」**
+
+PowerShell 默认不搜索当前目录，必须加 `.\` 前缀：
+
+```powershell
+.\start.bat 3000
+# 或
+cmd /c start.bat 3000
+# 或使用原生脚本
+.\start.ps1 3000
+```
+
+**PowerShell 提示「因为在此系统上禁止运行脚本」**
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\start.ps1
+# 或
+Unblock-File .\start.ps1
+```
+
+**提示端口被占用**
+
+换一个端口即可（`node server.js 3000`），脚本也会自动尝试下一个端口。
+
+**双击 index.html 就能用吗？**
+
+可以。本项目使用 hash 路由，不依赖服务端，图片也全部由 CSS 渐变生成，因此通过 `file://` 打开同样完整可用。
 
 ---
 
