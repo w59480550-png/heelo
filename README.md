@@ -9,17 +9,29 @@
 ## 快速开始
 
 ```bash
-# 方式一：直接打开
-open index.html          # macOS
-xdg-open index.html      # Linux
-start index.html         # Windows
+# 方式一：一键启动（自动选 Node，没有 Node 就用 Python）
+./start.sh              # macOS / Linux，默认 http://localhost:8080
+./start.sh 3000         # 指定端口
 
-# 方式二：本地静态服务器（推荐，行为与线上一致）
+# Windows：双击 start.bat，或在命令行执行
+start.bat
+start.bat 3000
+
+# 方式二：直接用零依赖自带服务器
+node server.js          # http://localhost:8080
+PORT=3000 node server.js
+
+# 方式三：最省事——直接双击 index.html
+# （hash 路由与 localStorage 都能用，无需服务器）
+
+# 方式四：只想要个静态服务器
 python3 -m http.server 8080
-# 然后访问 http://localhost:8080
 ```
 
+`server.js` 是一个 100 行的零依赖静态服务器：正确的 MIME 类型、`404` 友好页面、目录穿越防护、端口被占用时自动顺延端口。
+
 也可以直接部署到 GitHub Pages / Vercel / Netlify 等任意静态托管，无需任何配置。
+
 
 ---
 
@@ -51,6 +63,9 @@ python3 -m http.server 8080
 ├── js/
 │   ├── data.js         # 12 道菜谱数据与分类元数据
 │   └── app.js          # hash 路由、渲染、搜索筛选、收藏评分、主题
+├── server.js           # 零依赖本地启动服务器
+├── start.sh            # macOS / Linux 一键启动
+├── start.bat           # Windows 一键启动
 └── README.md
 ```
 
