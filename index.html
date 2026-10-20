@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>美食之旅 · 发现美味生活</title>
+  <meta name="description" content="美食之旅：12 道经典菜谱，含食材清单、分步做法、辣度与用时信息，支持搜索、分类筛选与本地收藏。">
+  <meta name="theme-color" content="#e2542c">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%8D%9C%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#app">跳到主要内容</a>
+
+  <!-- 顶部导航 -->
+  <header class="site-header" id="siteHeader">
+    <div class="container nav">
+      <a class="brand" href="#/" aria-label="美食之旅 首页">
+        <span class="brand-mark" aria-hidden="true">🍳</span>
+        <span>
+          <span class="brand-text">美食之旅</span>
+          <span class="brand-sub">Foodie Journal</span>
+        </span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a class="nav-link" href="#/" data-nav="home">首页</a></li>
+        <li><a class="nav-link" href="#/dishes" data-nav="dishes">美食分类</a></li>
+        <li><a class="nav-link" href="#/favorites" data-nav="favorites">我的收藏</a></li>
+        <li><a class="nav-link" href="#/about" data-nav="about">关于我们</a></li>
+      </ul>
+
+      <form class="nav-search" id="navSearchForm" role="search">
+        <label class="visually-hidden" for="navSearchInput">搜索美食</label>
+        <input id="navSearchInput" type="search" placeholder="搜索美食…" autocomplete="off">
+        <kbd>/</kbd>
+      </form>
+
+      <div class="nav-actions">
+        <a class="icon-btn icon-btn--fav" href="#/favorites" aria-label="我的收藏" title="我的收藏">
+          <span aria-hidden="true">♥</span>
+          <span class="fav-badge" id="favBadge" hidden>0</span>
+        </a>
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="切换明暗主题" title="切换明暗主题">
+          <span id="themeIcon" aria-hidden="true">🌙</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="navLinks">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 内容区由 js/app.js 按路由渲染 -->
+  <main id="app" tabindex="-1"></main>
+
+  <!-- 页脚 -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>美食之旅 Foodie Journal</strong>
+        <span class="footer-note">© <span id="year">2026</span> 美食之旅 · 所有权利保留</span>
+      </div>
+      <nav class="footer-links" aria-label="页脚导航">
+        <a href="#/">首页</a>
+        <a href="#/dishes">全部菜谱</a>
+        <a href="#/favorites">我的收藏</a>
+        <a href="#/about">关于我们</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="toast-stack" id="toastStack" role="status" aria-live="polite"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
