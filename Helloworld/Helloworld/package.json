@@ -1,0 +1,17 @@
+{
+  "name": "food-tour",
+  "version": "1.0.0",
+  "private": true,
+  "description": "美食之旅 - 纯静态美食展示站点（Vite 开发服务器 + 多页面构建）",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite",
+    "serve": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^8.3.4"
+  }
+}
