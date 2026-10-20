@@ -1,4 +1,4 @@
-# 美食之旅 · 一键启动（Windows PowerShell）
+﻿# 美食之旅 · 一键启动（Windows PowerShell）
 #
 # 用法（注意 PowerShell 必须加 .\ 前缀）：
 #   .\start.ps1
